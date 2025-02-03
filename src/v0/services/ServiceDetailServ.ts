@@ -10,18 +10,18 @@ export const getAll = async () => {
     return await getAllFromRepo();
 }
 
-export const getById = async (id: string) => {
-    return await getByIdFromRepo(id);
+export const getById = async (id: string, instrumentId: string) => {
+    return await getByIdFromRepo(id, instrumentId);
 }
 
 export const create = async (data: any) => {
     return await createFromRepo(data);
 }
 
-export const update = async (id: string, data: any) => {
-    return await updateFromRepo(id, data);
+export const update = async (id: string, instrumentId: string, data: any) => {
+    return await updateFromRepo(id, instrumentId, data);
 }
 
-export const logicalDelete = async (id: string) => {
-    return await logicalDeleteFromRepo(id);
+export const logicalDelete = async (id: string, instrumentId: string) => {
+    return await logicalDeleteFromRepo(id, instrumentId);
 }

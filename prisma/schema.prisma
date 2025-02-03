@@ -67,4 +67,5 @@ model ResponsiblePerson {
   email       String   @db.VarChar(255)
   phone       String   @db.VarChar(255)
   propositionalTitle String   @db.VarChar(255)
+  isResigned Boolean
 }

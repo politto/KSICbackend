@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Instrument {
+  id          String   @id @default(cuid())
+  isScientistRequred Boolean
+  name        String   @db.VarChar(255)
+  typeOfInstrument String   @db.VarChar(255)
+  detail     String   @db.VarChar(255)
+  avalibility InstrumentAvalibility
+  picLink     String   @db.VarChar(255)
+  questionSet String  //free length string
+  application String
+  documentLinkPath String
+  isDeleted Boolean
+
+  services ServiceDetail[]
+}
+
+model ResponsibleHistory {
+  instrumentId String
+  responsiblePersonId String
+  startDT DateTime
+  endDT DateTime
+
+  @@id ([instrumentId, responsiblePersonId, startDT])
+}
+
+
+enum InstrumentAvalibility {
+  AVAILABLE
+  UNAVAILABLE
+  NOT_READY_FOR_USE
+}
+
+model ServiceDetail {
+  serviceId          String    @default(cuid())
+  instrumentId String  @db.VarChar(255)
+  standardPriceForPublicOrg Float
+  standardPriceForPrivateOrg Float
+  standardPriceForInternal Float
+  name        String   @db.VarChar(255)
+  unitCount   String   @db.VarChar(6)
+  isDeleted Boolean
+
+  referencedInstrument Instrument @relation(fields: [instrumentId], references: [id])
+
+  @@id([serviceId, instrumentId])
+}
+
+model ResponsiblePerson {
+  id          String   @id @default(cuid())
+  name        String   @db.VarChar(255)
+  surname     String   @db.VarChar(255)
+  email       String   @db.VarChar(255)
+  phone       String   @db.VarChar(255)
+  propositionalTitle String   @db.VarChar(255)
+}

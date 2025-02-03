@@ -8,7 +8,8 @@
   "dependencies": {
     "@elysiajs/swagger": "^1.2.0",
     "@prisma/client": "6.3.0",
-    "elysia": "latest"
+    "elysia": "latest",
+    "git-filter-repo": "^0.0.30"
   },
   "devDependencies": {
     "bun-types": "latest",

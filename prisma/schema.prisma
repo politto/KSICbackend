@@ -15,27 +15,31 @@ datasource db {
 
 model Instrument {
   id          String   @id @default(cuid())
-  isScientistRequred Boolean
+  isScientistRequired Boolean
   name        String   @db.VarChar(255)
   typeOfInstrument String   @db.VarChar(255)
   detail     String   @db.VarChar(255)
   avalibility InstrumentAvalibility
   picLink     String   @db.VarChar(255)
-  questionSet String  //free length string
+  questionSet String?  //free length string
   application String
   documentLinkPath String
   isDeleted Boolean
 
   services ServiceDetail[]
+  responsibleHistories ResponsibleHistory[]
 }
 
 model ResponsibleHistory {
-  instrumentId String
-  responsiblePersonId String
+  id          String   @id @default(cuid())
+  instrumentId String @db.VarChar(255) @unique
+  responsiblePersonId String @db.VarChar(255) @unique
   startDT DateTime
-  endDT DateTime
+  endDT DateTime?
 
-  @@id ([instrumentId, responsiblePersonId, startDT])
+  referencedInstrument Instrument @relation(fields: [instrumentId], references: [id])
+  referencedResponsiblePerson ResponsiblePerson @relation(fields: [responsiblePersonId], references: [id])
+
 }
 
 
@@ -68,4 +72,7 @@ model ResponsiblePerson {
   phone       String   @db.VarChar(255)
   propositionalTitle String   @db.VarChar(255)
   isResigned Boolean
+
+  respondedHistory ResponsibleHistory[]
 }
+

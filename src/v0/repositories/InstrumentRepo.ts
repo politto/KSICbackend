@@ -1,4 +1,4 @@
-import { PrismaClient, Instrument } from '@prisma/client';
+import { PrismaClient, Instrument, ResponsiblePerson, ResponsibleHistory } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -14,9 +14,28 @@ export const getById = async (id: string): Promise<Instrument | null> => {
     });
 }
 
+export const getCurrentResponsibleHistory = async (instrumentId: string): Promise<ResponsibleHistory | null> => {
+    return await prisma.responsibleHistory.findFirst({
+        where: {
+            instrumentId:instrumentId,
+            endDT: null
+        }
+    });
+}
+
 export const create = async (data: Omit<Instrument, 'id'>): Promise<Instrument> => {
     return await prisma.instrument.create({
         data
+    });
+}
+
+export const createNewResponsibleHistory = async (responsiblePersonId: string, instrumentId: string) => {
+    return await prisma.responsibleHistory.create({
+        data: {
+            responsiblePersonId,
+            instrumentId,
+            startDT: new Date()
+        }
     });
 }
 
@@ -47,6 +66,18 @@ export const logicalDelete = async (id: string): Promise<Instrument> => {
         },
         data: {
             isDeleted: true
+        }
+    });
+}
+
+export const suspendCurrentResponsibleHistory = async (instrumentId: string) => {
+    return await prisma.responsibleHistory.updateMany({
+        where: {
+            instrumentId: instrumentId,
+            endDT: null
+        },
+        data: {
+            endDT: new Date()
         }
     });
 }

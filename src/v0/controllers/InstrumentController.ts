@@ -3,6 +3,8 @@ import {
     getAll as getAllFromServ,
     getByIdWithResponsiblePerson as getByIdWithResponsiblePersonFromServ,
     create as createFromServ,
+    createWithNewResponsibleHistory as createWithNewResponsibleHistoryFromServ,
+    createNewResponsibleHistory as createNewResponsibleHistoryFromServ,
     update as updateFromServ,
     updateQuestionSet as updateQuestionSetFromServ,
     logicalDelete as logicalDeleteFromServ
@@ -13,8 +15,10 @@ export const InstrumentController = new Elysia({ prefix: "/instrument" })
     .get("/getAll", async () => {
         return await getAllFromServ();
     })
-    .get("/getByIdWithResponsiblePerson", async (req: { query: { id: string; }; }) => {
-        return await getByIdWithResponsiblePersonFromServ(req.query.id);
+    .get("/getByIdWithResponsiblePerson/:id", async (req) => {
+        console.log(req.params.id);
+        
+        return await getByIdWithResponsiblePersonFromServ(req.params.id);
     })
 
     .post("/create", async (req: { body: any; }) => {
@@ -22,11 +26,11 @@ export const InstrumentController = new Elysia({ prefix: "/instrument" })
     })
 
     .post("/createWithNewResponsibleHistory", async (req: { body: any; }) => {
-        return await createFromServ(req.body);
+        return await createWithNewResponsibleHistoryFromServ(req.body.instrument, req.body.responsiblePersonId);
     })
 
-    .post("/createNewResponsibleHistory", async (req: { body: any; }) => {
-        return await createFromServ(req.body);
+    .post("/createNewResponsibleHistory/:responsiblePersonId/:instrumentId", async (req) => {
+        return await createNewResponsibleHistoryFromServ(req.params.responsiblePersonId, req.params.instrumentId);
     })
 
     .put("/update", async (req: { query: { id: string; }; body: any; }) => {
@@ -35,6 +39,6 @@ export const InstrumentController = new Elysia({ prefix: "/instrument" })
     .put("/updateQuestionSet", async (req: { query: { id: string; }; body: any; }) => {
         return await updateQuestionSetFromServ(req.query.id, req.body);
     })
-    .delete("/logicalDelete", async (req: { query: { id: string; }; }) => {
+    .put("/logicalDelete", async (req: { query: { id: string; }; }) => {
         return await logicalDeleteFromServ(req.query.id);
     })

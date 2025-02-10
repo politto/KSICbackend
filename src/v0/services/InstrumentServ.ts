@@ -16,7 +16,11 @@ export const getAll = async (): Promise<Instrument[]> => {
 }
 
 export const getByIdWithResponsiblePerson = async (id: string): Promise<{instrument: Instrument, responsiblePerson: ResponsibleHistory}> => {
+    console.log(id);
+    
     const instrument: Instrument = (await getByIdFromRepo(id))!;
+    console.log("eeee");
+    
     const currentResponsibleHistory: ResponsibleHistory = (await getCurrentResponsibleHistory(id))!;
     return {
         instrument: instrument,

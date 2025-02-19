@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,65 +8,67 @@ datasource db {
 }
 
 model Instrument {
-  id          String   @id @default(cuid())
-  isScientistRequired Boolean
-  name        String   @db.VarChar(255)
-  typeOfInstrument String   @db.VarChar(255)
-  detail     String   @db.VarChar(255)
-  avalibility InstrumentAvalibility
-  picLink     String   @db.VarChar(255)
-  questionSet String?  //free length string
-  application String
-  documentLinkPath String
-  isDeleted Boolean
-
-  services ServiceDetail[]
-  responsibleHistories ResponsibleHistory[]
+  id                   String                @id @default(cuid())
+  name                 String                @db.VarChar(255)
+  typeOfInstrument     String                @db.VarChar(255)
+  detail               String                @db.VarChar(255)
+  avalibility          InstrumentAvalibility
+  picLink              String                @db.VarChar(255)
+  questionSet          String?
+  application          String
+  documentLinkPath     String
+  isDeleted            Boolean
+  isScientistRequired  Boolean
+  responsibleHistories ResponsibleHistory?
+  services             ServiceDetail[]
 }
 
 model ResponsibleHistory {
-  id          String   @id @default(cuid())
-  instrumentId String @db.VarChar(255) @unique
-  responsiblePersonId String @db.VarChar(255) @unique
-  startDT DateTime
-  endDT DateTime?
-
-  referencedInstrument Instrument @relation(fields: [instrumentId], references: [id])
+  instrumentId                String            @unique @db.VarChar(255)
+  responsiblePersonId         String            @unique @db.VarChar(255)
+  startDT                     DateTime
+  endDT                       DateTime?
+  id                          String            @id @default(cuid())
+  referencedInstrument        Instrument        @relation(fields: [instrumentId], references: [id])
   referencedResponsiblePerson ResponsiblePerson @relation(fields: [responsiblePersonId], references: [id])
-
 }
 
+model ServiceDetail {
+  standardPriceForPublicOrg  Float
+  standardPriceForPrivateOrg Float
+  standardPriceForInternal   Float
+  name                       String     @db.VarChar(255)
+  unitCount                  String     @db.VarChar(6)
+  isDeleted                  Boolean
+  instrumentId               String     @db.VarChar(255)
+  serviceId                  String     @default(cuid())
+  referencedInstrument       Instrument @relation(fields: [instrumentId], references: [id])
+
+  @@id([serviceId, instrumentId])
+}
+
+model ResponsiblePerson {
+  id                 String              @id @default(cuid())
+  name               String              @db.VarChar(255)
+  surname            String              @db.VarChar(255)
+  email              String              @db.VarChar(255)
+  phone              String              @db.VarChar(255)
+  propositionalTitle String              @db.VarChar(255)
+  isResigned         Boolean
+  respondedHistory   ResponsibleHistory?
+}
+
+model Staff {
+  id        String  @id @default(cuid())
+  name      String  @db.VarChar(255)
+  surname   String  @db.VarChar(255)
+  email     String  @db.VarChar(255)
+  phone     String  @db.VarChar(255)
+  isDeleted Boolean
+}
 
 enum InstrumentAvalibility {
   AVAILABLE
   UNAVAILABLE
   NOT_READY_FOR_USE
 }
-
-model ServiceDetail {
-  serviceId          String    @default(cuid())
-  instrumentId String  @db.VarChar(255)
-  standardPriceForPublicOrg Float
-  standardPriceForPrivateOrg Float
-  standardPriceForInternal Float
-  name        String   @db.VarChar(255)
-  unitCount   String   @db.VarChar(6)
-  isDeleted Boolean
-
-  referencedInstrument Instrument @relation(fields: [instrumentId], references: [id])
-
-  @@id([serviceId, instrumentId])
-}
-
-model ResponsiblePerson {
-  id          String   @id @default(cuid())
-  name        String   @db.VarChar(255)
-  surname     String   @db.VarChar(255)
-  email       String   @db.VarChar(255)
-  phone       String   @db.VarChar(255)
-  propositionalTitle String   @db.VarChar(255)
-  isResigned Boolean
-
-  respondedHistory ResponsibleHistory[]
-}
-

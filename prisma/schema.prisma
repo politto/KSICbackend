@@ -67,6 +67,22 @@ model Staff {
   isDeleted Boolean
 }
 
+model Customer {
+  id          String  @id @default(cuid())
+  name        String  @db.VarChar(255)
+  surname     String  @db.VarChar(255)
+  proposition String  @db.VarChar(255)
+  workplace   String  @db.VarChar(255)
+  career      String  @db.VarChar(255)
+  isDeleted   Boolean
+}
+
+enum typeOfCust {
+  inHouse
+  government
+  private
+}
+
 enum InstrumentAvalibility {
   AVAILABLE
   UNAVAILABLE

@@ -8,17 +8,17 @@
     "build": "tsc && prisma generate && bun build"
   },
   "dependencies": {
-    "@elysiajs/swagger": "^1.2.0",
-    "@prisma/client": "6.3.0",
+    "@elysiajs/swagger": "^1.2.1",
+    "@prisma/client": "^6.4.0",
     "@types/jest": "^29.5.14",
-    "elysia": "latest",
+    "elysia": "^1.2.15",
     "git-filter-repo": "^0.0.30",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5"
   },
   "devDependencies": {
     "bun-types": "latest",
-    "prisma": "6.3.0"
+    "prisma": "^6.4.0"
   },
   "module": "src/index.js",
   "bun-create": {

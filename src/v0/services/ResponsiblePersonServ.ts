@@ -1,5 +1,5 @@
 import { Instrument } from '@prisma/client';
-import { ResponsiblePerson } from '../models/ResponsiblePerson';
+import { ResponsiblePerson } from '@prisma/client';
 import {
 
     getAll as getAllFromRepo,

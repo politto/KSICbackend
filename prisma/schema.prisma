@@ -74,7 +74,7 @@ model Customer {
   name        String  @db.VarChar(255)
   surname     String  @db.VarChar(255)
   proposition String  @db.VarChar(255)
-  workplace   String  @db.VarChar(255)
+  workplace   typeOfCust
   career      String  @db.VarChar(255)
   isDeleted   Boolean
 }

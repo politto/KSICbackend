@@ -1,3 +1,4 @@
+import { ResponsiblePerson } from '@prisma/client';
 import {
     getAll as getAllFromServ,
     getById as getByIdFromServ,
@@ -16,6 +17,9 @@ export const ResponsiblePersonController = new Elysia({ prefix: "/responsiblePer
         return await getByIdFromServ(req.query.id);
     })
     .post("/create", async (req: { body: any; }) => {
+        return await createFromServ(req.body);
+    })
+    .post("/createMany", async (req: { body: Omit<ResponsiblePerson, "id">[]; }) => {
         return await createFromServ(req.body);
     })
     .put("/update", async (req: { query: { id: string; }; body: any; }) => {

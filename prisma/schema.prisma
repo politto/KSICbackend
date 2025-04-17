@@ -11,7 +11,8 @@ model Instrument {
   id                   String                @id @default(cuid())
   name                 String                @db.VarChar(255)
   typeOfInstrument     String                @db.VarChar(255)
-  detail               String                @db.VarChar(255)
+  detail               String                @db.VarChar(2047)
+  spec        String @db.VarChar(255)
   avalibility          InstrumentAvalibility
   picLink              String                @db.VarChar(255)
   questionSet          String?
@@ -51,9 +52,10 @@ model ResponsiblePerson {
   id                 String              @id @default(cuid())
   name               String              @db.VarChar(255)
   surname            String              @db.VarChar(255)
-  email              String              @db.VarChar(255)
-  phone              String              @db.VarChar(255)
-  propositionalTitle String              @db.VarChar(255)
+  email              String?              @db.VarChar(255)
+  phone              String?              @db.VarChar(255)
+  propositionalTitle String?              @db.VarChar(255)
+  picLink              String                @db.VarChar(255)
   isResigned         Boolean
   respondedHistory   ResponsibleHistory?
 }

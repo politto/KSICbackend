@@ -1,4 +1,4 @@
-import { ResponsiblePerson } from "@prisma/client";
+import { Prisma, ResponsiblePerson } from "@prisma/client";
 
 import { PrismaClient } from '@prisma/client';
 
@@ -19,6 +19,13 @@ export const getById = async (id: string): Promise<ResponsiblePerson | null> => 
 export const create = async (data: Omit<ResponsiblePerson, 'id'>): Promise<ResponsiblePerson> => {
     const prisma = new PrismaClient();
     return await prisma.responsiblePerson.create({
+        data
+    });
+}
+
+export const createMany = async (data: Omit<ResponsiblePerson, 'id'>[]): Promise<Prisma.BatchPayload> => {
+    const prisma = new PrismaClient();
+    return await prisma.responsiblePerson.createMany({
         data
     });
 }

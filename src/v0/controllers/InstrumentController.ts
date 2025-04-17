@@ -3,6 +3,7 @@ import {
     getAll as getAllFromServ,
     getByIdWithResponsiblePerson as getByIdWithResponsiblePersonFromServ,
     create as createFromServ,
+    createMany as createManyFromServ,
     createWithNewResponsibleHistory as createWithNewResponsibleHistoryFromServ,
     createNewResponsibleHistory as createNewResponsibleHistoryFromServ,
     update as updateFromServ,
@@ -12,6 +13,7 @@ import {
 
 export const InstrumentController = new Elysia({ prefix: "/instrument" })
 
+    
     .get("/getAll", async () => {
         return await getAllFromServ();
     })
@@ -23,6 +25,10 @@ export const InstrumentController = new Elysia({ prefix: "/instrument" })
 
     .post("/create", async (req: { body: any; }) => {
         return await createFromServ(req.body);
+    })
+
+    .post("/createMany", async (req: { body: any; }) => {
+        return await createManyFromServ(req.body);
     })
 
     .post("/createWithNewResponsibleHistory", async (req: { body: any; }) => {

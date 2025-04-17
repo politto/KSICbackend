@@ -2,21 +2,22 @@
   "name": "@bun-examples/elysia",
   "version": "1.0.50",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "eden",
+    "start": "bun run src/index.ts",
     "dev": "bun run --watch src/index.ts",
     "postinstall": "prisma generate",
     "build": "tsc && prisma generate && bun build"
   },
   "dependencies": {
+    "@elysiajs/eden": "^1.2.0",
     "@elysiajs/swagger": "^1.2.1",
     "@prisma/client": "^6.4.0",
-    "@types/jest": "^29.5.14",
-    "elysia": "^1.2.15",
+    "elysia": "^1.2.25",
     "git-filter-repo": "^0.0.30",
-    "jest": "^29.7.0",
     "ts-jest": "^29.2.5"
   },
   "devDependencies": {
+    "@types/bun": "^1.2.9",
     "bun-types": "latest",
     "prisma": "^6.4.0"
   },

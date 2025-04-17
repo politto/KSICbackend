@@ -1,10 +1,11 @@
-import { Instrument } from '@prisma/client';
+import { Instrument, Prisma } from '@prisma/client';
 import { ResponsiblePerson } from '@prisma/client';
 import {
 
     getAll as getAllFromRepo,
     getById as getByIdFromRepo,
     create as createFromRepo,
+    createMany as createManyFromRepo,
     update as updateFromRepo,
     logicalDelete as logicalDeleteFromRepo
 } from '../repositories/ResponsiblePersonRepo';
@@ -19,6 +20,10 @@ export const getById = async (id: string): Promise<ResponsiblePerson | null> => 
 
 export const create = async (data: any): Promise<ResponsiblePerson> => {
     return await createFromRepo(data);
+}
+
+export const createMany = async (data: ResponsiblePerson[]): Promise<Prisma.BatchPayload> => {
+    return await createManyFromRepo(data);
 }
 
 export const update = async (id: string, data: any): Promise<ResponsiblePerson | null> => {

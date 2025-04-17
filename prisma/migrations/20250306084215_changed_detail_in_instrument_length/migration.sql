@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Instrument" ALTER COLUMN "detail" SET DATA TYPE VARCHAR(2047);

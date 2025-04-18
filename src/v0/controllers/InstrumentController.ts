@@ -14,7 +14,7 @@ import {
 export const InstrumentController = new Elysia({ prefix: "/instrument" })
 
     
-    .get("/getAll", async () => {
+    .get("/", async () => {
         return await getAllFromServ();
     })
     .get("/getByIdWithResponsiblePerson/:id", async (req) => {
@@ -23,7 +23,7 @@ export const InstrumentController = new Elysia({ prefix: "/instrument" })
         return await getByIdWithResponsiblePersonFromServ(req.params.id);
     })
 
-    .post("/create", async (req: { body: any; }) => {
+    .post("/", async (req: { body: any; }) => {
         return await createFromServ(req.body);
     })
 
